@@ -1,21 +1,24 @@
-version: '3'
+
+version: '3.8'
 
 services:
-  db:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: myapp_development
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-
   web:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    depends_on:
-      - db
     ports:
       - "3000:3000"
     volumes:
       - .:/app
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: "postgresql://postgres:password@db:5432/open_flights_development"
+#    entrypoint: /usr/bin/entrypoint.sh   # Set the entrypoint script
+  db:
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: open_flights_development
