@@ -3,8 +3,8 @@ kind: StatefulSet
 metadata:
   name: open-flights-db
 spec:
-  serviceName: open-flights-db
   replicas: 1
+  serviceName: open-flights-db
   selector:
     matchLabels:
       app: open-flights-db
@@ -14,23 +14,25 @@ spec:
         app: open-flights-db
     spec:
       containers:
-      - name: db
-        image: postgres:12
-        ports:
-        - containerPort: 5432
-        env:
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: password
-        - name: POSTGRES_DB
-          value: open_flights_development
+        - name: db
+          image: postgres:12
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "password"
+            - name: POSTGRES_DB
+              value: "open_flights_development"
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: standard  # Use appropriate storage class
-      resources:
-        requests:
-          storage: 1Gi  # Adjust size as needed
+    - metadata:
+        name: db-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi  # Adjust size as per your PersistentVolumeClaim
