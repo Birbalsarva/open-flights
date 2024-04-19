@@ -10,10 +10,11 @@ ENV RAILS_ENV=development \
 # Set working directory
 WORKDIR /app
 
-# Install Node.js and Yarn
+# Install Node.js, Yarn, and netcat
 RUN apt-get update && apt-get install -y \
     nodejs \
     yarn \
+    netcat-openbsd \
   && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies
