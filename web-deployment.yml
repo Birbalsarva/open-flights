@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: birbalsarva/open-flights-web:latest  # Updated image name
+          image: birbalsarva/open-flights_web:latest  # Updated image name
           ports:
             - containerPort: 3000
           env:
