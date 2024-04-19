@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-flights-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-flights-web
+  template:
+    metadata:
+      labels:
+        app: open-flights-web
+    spec:
+      containers:
+      - name: web
+        image: birbalsarva/open-flights_web:latest
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: app-volume
+          mountPath: /app
+      volumes:
+      - name: app-volume
+        emptyDir: {}
