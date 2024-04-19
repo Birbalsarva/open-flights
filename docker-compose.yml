@@ -1,9 +1,8 @@
-
 version: '3.8'
 
 services:
   web:
-    build: .
+    image: birbalsarva/open-flights_web:latest  # Specify your custom image here
     ports:
       - "3000:3000"
     volumes:
@@ -13,7 +12,7 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: "postgresql://postgres:password@db:5432/open_flights_development"
-#    entrypoint: /usr/bin/entrypoint.sh   # Set the entrypoint script
+    
   db:
     image: postgres:12
     ports:
