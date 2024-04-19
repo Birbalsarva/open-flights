@@ -13,13 +13,19 @@ spec:
         app: open-flights-web
     spec:
       containers:
-      - name: web
-        image: birbalsarva/open-flights_web:latest
-        ports:
-        - containerPort: 3000
-        volumeMounts:
-        - name: app-volume
-          mountPath: /app
+        - name: web
+          image: birbalsarva/open-flights_web:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: RAILS_ENV
+              value: "development"
+            - name: DATABASE_URL
+              value: "postgresql://postgres:password@db:5432/open_flights_development"
+          volumeMounts:
+            - name: app-volume
+              mountPath: /app
       volumes:
-      - name: app-volume
-        emptyDir: {}
+        - name: app-volume
+          emptyDir: {}
+
